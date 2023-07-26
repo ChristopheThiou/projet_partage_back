@@ -62,7 +62,6 @@ annonceController.patch("/:id", checkId, async (req, res) => {
 const annonceValidation = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
-  disponible: Joi.boolean().required(),
   comment: Joi.string().required(),
   status: Joi.string().required(),
   type: Joi.string().required(),
@@ -71,7 +70,6 @@ const annonceValidation = Joi.object({
 const annoncePatchValidation = Joi.object({
     name: Joi.string(),
     description: Joi.string(),
-    disponible: Joi.boolean(),
     comment: Joi.string(),
     status: Joi.string(),
     type: Joi.string(),

@@ -9,7 +9,6 @@ export interface Annonce{
     _id?:any;
     name: string;
     description:string;
-    disponible:boolean;
     comment:string;
     status:string;
     type: string;
