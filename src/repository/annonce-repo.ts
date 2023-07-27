@@ -25,4 +25,17 @@ export const annonceRepo = {
   update(_id: string, annonce: Annonce) {
     return collection.updateOne({ _id: new ObjectId(_id) }, { $set: annonce });
   },
+  search(query: any) {
+    return collection
+      .find({
+        $or: [
+          { name: { $regex: query } },
+
+          { type: { $regex: query } },
+
+          { status: { $regex: query } },
+        ],
+      })
+      .toArray();
+  },
 };

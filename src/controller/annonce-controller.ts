@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, query } from "express";
 import { annonceRepo } from "../repository/annonce-repo";
 import { checkId } from "../middleware";
 import Joi from "joi";
@@ -6,6 +6,11 @@ import Joi from "joi";
 export const annonceController = Router();
 
 annonceController.get("/", async (req, res) => {
+  if (req.query.search) {
+    const annonces = await annonceRepo.search(req.query.search);
+    res.json(annonces);
+    return;
+  }
   const annonces = await annonceRepo.findAll();
   res.json(annonces);
 });
@@ -29,7 +34,9 @@ annonceController.get("/id/:id", checkId, async (req, res) => {
 });
 
 annonceController.post("/", async (req, res) => {
-  const validation = annonceValidation.validate(req.body, { abortEarly: false });
+  const validation = annonceValidation.validate(req.body, {
+    abortEarly: false,
+  });
   if (validation.error) {
     res.status(400).json(validation.error);
     return;
@@ -68,9 +75,9 @@ const annonceValidation = Joi.object({
 });
 
 const annoncePatchValidation = Joi.object({
-    name: Joi.string(),
-    description: Joi.string(),
-    comment: Joi.string(),
-    status: Joi.string(),
-    type: Joi.string(),
+  name: Joi.string(),
+  description: Joi.string(),
+  comment: Joi.string(),
+  status: Joi.string(),
+  type: Joi.string(),
 });
