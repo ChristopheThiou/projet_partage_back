@@ -30,9 +30,7 @@ export const annonceRepo = {
       .find({
         $or: [
           { name: { $regex: query } },
-
           { type: { $regex: query } },
-
           { status: { $regex: query } },
         ],
       })
